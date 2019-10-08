@@ -1,0 +1,29 @@
+{
+    "target":  "category",
+    "items": [{
+        "id": 1001,
+        "name": "生活",
+        "description": "这是对分类的描述信息",
+        "action": ["delete", "update"]
+    },{
+        "id": 1002,
+        "name": "生活",
+        "description": "这是对分类的描述信息",
+        "action": ["delete", "update"]
+    },{
+        "id": 1003,
+        "name": "生活",
+        "description": "这是对分类的描述信息",
+        "action": ["delete", "update"]
+    },{
+        "id": 1004,
+        "name": "生活",
+        "description": "这是对分类的描述信息",
+        "action": ["delete", "update"]
+    },{
+        "id": 1005,
+        "name": "生活",
+        "description": "这是对分类的描述信息",
+        "action": ["delete", "update"]
+    }]
+}

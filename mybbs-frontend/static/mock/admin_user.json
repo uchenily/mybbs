@@ -1,0 +1,19 @@
+{
+    "target": "users",
+    "items": [{
+        "id": 2001,
+        "name": "zhangsan",
+        "update_at": "0000-00-00",
+        "action": ["update", "delete"]
+    },{
+        "id": 2002,
+        "name": "lisi",
+        "update_at": "2019-10-04",
+        "action": ["update", "delete"]
+    },{
+        "id": 2003,
+        "name": "wangwu",
+        "update_at": "0000-00-00",
+        "action": ["update", "delete"]
+    }]
+}

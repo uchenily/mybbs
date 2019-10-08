@@ -1,0 +1,59 @@
+body {
+    background: #f8fafc;
+}
+a, a:visited {
+    color: #000;
+    text-decoration:none;
+}
+*::selection {
+    background: #b3e6e4;
+}
+/* 闭合浮动 */
+.clearfix:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+input, button, select {
+    box-sizing: border-box;
+    display: block;
+    border: 1px solid #e7e7e7; 
+    border-radius: 3px;
+    font-family: "Microsoft YaHei";
+}
+button {
+    border-color: #00bdb5;
+    font-weight: 700;
+    background: #00bdb5;
+    color: #fff;
+}
+button:hover {
+    background: #02afa7;
+}
+input:focus, select:focus {
+    border-color: #00bdb5;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(0,189,181,.5);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(0,189,181,.5)
+}
+textarea {
+    padding: 0;
+    font-size: 20px;
+    font-family: Consolas, emoji, "Microsoft YaHei";
+    border: 1px solid #dcebf5;
+    border-radius: 3px;
+    color: #363a39;
+}
+textarea:focus {
+    border-color: #00bdb5;
+    outline: 0;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(0,189,181,.5);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(0,189,181,.5)
+}
+/* 不显示滚动条 */
+::-webkit-scrollbar {
+    display: none;
+}

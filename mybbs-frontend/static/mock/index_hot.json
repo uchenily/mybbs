@@ -1,0 +1,23 @@
+{
+    "token": "f2c03512-4b10-4bac-8598-0e612f83806c",
+    "user": "fake-username",
+    "current": "hot",
+    "items": [{
+        "id": 1001,
+        "author": "zhangsan",
+        "category": "历史",
+        "title": "这是一个热度帖1",
+        "latestReply": "写得不错, 继续加油~"
+    },{
+        "id": 1002,
+        "author": "lisi",
+        "category": "情感",
+        "title": "这是一个热度帖2",
+        "latestReply": "这是一个莫得感情的帖子"
+    },{
+        "id": 1003,
+        "author": "wangwu",
+        "category": "生活",
+        "title": "这是一个hot帖3"
+    }]
+}
