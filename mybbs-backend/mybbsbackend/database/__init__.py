@@ -17,7 +17,7 @@ def get_engine():
     global _ENGINE
     if _ENGINE is None:
         _ENGINE = create_engine('sqlite://', echo=True)
-        Base.metadata.create_all(_ENGINE)
+        create_table(_ENGINE)
     return _ENGINE
 
 
