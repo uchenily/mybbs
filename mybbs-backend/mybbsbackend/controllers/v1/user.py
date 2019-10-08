@@ -23,6 +23,10 @@ class UserController(rest.RestController):
         return self.user.add_one(user)
 
     @expose('json')
+    def put(self, user):
+        return self.user.update_user(user)
+
+    @expose('json')
     def delete(self, username):
         self.user.delete_user_by_username(username)
         return None
