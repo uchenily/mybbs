@@ -1,14 +1,15 @@
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Text
 from mybbsbackend.database import Base
 from datetime import datetime
+#from mybbsbackend.database.model.user import UserModel
 
 
-class UserModel(Base):
+class CategoryModel(Base):
 
-    __tablename__ = 'users'
+    __tablename__ = 'categories'
     id = Column(Integer, primary_key=True)
-    username = Column(String(20), unique=True)
-    password = Column(String(20))
+    name = Column(String(20))
+    description = Column(Text)
     created_time = Column(DateTime, default=datetime.now)
     updated_time = Column(DateTime, default=datetime.now,
                           onupdate=datetime.now)
@@ -16,8 +17,8 @@ class UserModel(Base):
     def __json__(self):
         return dict(
             id=self.id,
-            username=self.username,
-            password=self.password,
+            name=self.name,
+            description=self.description,
             created_time=self.created_time,
             updated_time=self.updated_time
         )

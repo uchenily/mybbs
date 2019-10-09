@@ -15,6 +15,15 @@ class UserAPI:
         except exc.NoResultFound:
             return None
 
+    def get_one_by_id(self, id):
+        session = database.get_session()
+        query = session.query(model_user.UserModel).filter_by(id=id)
+        try:
+            user = query.one()
+            return user
+        except exc.NoResultFound:
+            return None
+
     def get_all(self):
         session = database.get_session()
         query = session.query(model_user.UserModel)
@@ -38,8 +47,7 @@ class UserAPI:
     def update_user(self, user):
         session = database.get_session()
         user_id = user.get('id')
-        query = session.query(model_user.UserModel).filter_by(
-                    id=user_id)
+        query = session.query(model_user.UserModel).filter_by(id=user_id)
         try:
             # 'user' is a dict object here, not a model instance.
             # update() return a number, not a model instance.
