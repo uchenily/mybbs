@@ -172,7 +172,31 @@ curl http://localhost:8888/v1/topics
 ```
 
 
-
+**回复**         
+                                              
+创建一个回复
+                                              
+POST /v1/replies
+                                              
+```bash                               
+curl -XPOST http://localhost:8888/v1/replies \
+-H "Content-Type: application/json" \
+-d \
+'{
+    "reply": {
+        "user_id": 1,
+        "content": "this is test content1"
+    }
+}'
+```                                           
+                                              
+获取回复列表
+                                              
+GET /v1/replies
+                                              
+```bash                                
+curl http://localhost:8888/v1/replies
+```                                           
 
 
 ### mybbs-frontend项目
