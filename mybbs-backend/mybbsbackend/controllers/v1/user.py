@@ -7,7 +7,7 @@ from mybbsbackend.database.model import user as model_user
 
 class UserController(rest.RestController):
     def __init__(self):
-        self.user = api_user.User()
+        self.user = api_user.UserAPI()
 
     @expose('json')
     def get_one(self, username):

@@ -4,7 +4,7 @@ from mybbsbackend import database
 from mybbsbackend.database.model import user as model_user
 
 
-class User:
+class UserAPI:
     def get_one_by_username(self, username):
         session = database.get_session()
         query = session.query(
@@ -30,7 +30,6 @@ class User:
             session.add(user)
             session.flush()
             session.commit()
-            print('#####', user)
             return user
         except Exception:
             pass
