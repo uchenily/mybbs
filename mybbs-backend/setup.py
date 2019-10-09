@@ -14,6 +14,7 @@ setup(
     author_email='',
     install_requires=[
         "pecan",
+        "sqlalchemy"
     ],
     test_suite='mybbsbackend',
     zip_safe=False,
