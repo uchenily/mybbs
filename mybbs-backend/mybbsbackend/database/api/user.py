@@ -37,11 +37,17 @@ class UserAPI:
 
     def update_user(self, user):
         session = database.get_session()
-        query = session.query(user.UserModel).filter_by(username=user.username)
+        user_id = user.get('id')
+        query = session.query(model_user.UserModel).filter_by(
+                    id=user_id)
         try:
+            # 'user' is a dict object here, not a model instance.
+            # update() return a number, not a model instance.
+            # in add_one(), 'user' stands a model instance.
             query.update(user)
             session.flush()
             session.commit()
+            return user
         except exc.NoResultFound:
             pass
             # TODO
