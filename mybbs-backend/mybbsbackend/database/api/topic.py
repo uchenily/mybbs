@@ -6,10 +6,10 @@ from mybbsbackend.database.model import topic as model_topic
 
 
 class TopicAPI:
-    def get_one_by_title(self, title):
+    def get_one_by_id(self, id):
         session = database.get_session()
         query = session.query(
-            model_topic.TopicModel).filter_by(title=title)
+            model_topic.TopicModel).filter_by(id=id)
         try:
             topic = query.one()
             return topic
