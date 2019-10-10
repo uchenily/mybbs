@@ -10,8 +10,8 @@ class CategoryController(rest.RestController):
         self.category = api_category.CategoryAPI()
 
     @expose('json')
-    def get_one(self, name):
-        return self.category.get_one_by_name(name)
+    def get_one(self, id):
+        return self.category.get_one_by_id(id)
 
     @expose('json')
     def get_all(self):
