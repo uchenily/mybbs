@@ -18,6 +18,10 @@ class TopicController(rest.RestController):
         return self.topic.get_all()
 
     @expose('json')
+    def get_list_by_flag(self, flag):
+        return self.topic.get_list_by_flag(flag)
+
+    @expose('json')
     def post(self, topic):
         topic = model_topic.TopicModel(**topic)
         return self.topic.add_one(topic)
