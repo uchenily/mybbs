@@ -10,8 +10,8 @@ class TopicController(rest.RestController):
         self.topic = api_topic.TopicAPI()
 
     @expose('json')
-    def get_one(self, title):
-        return self.topic.get_one_by_title(title)
+    def get_one(self, id):
+        return self.topic.get_one_by_id(id)
 
     @expose('json')
     def get_all(self):
