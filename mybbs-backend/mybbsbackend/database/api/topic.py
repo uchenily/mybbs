@@ -37,7 +37,13 @@ class TopicAPI:
         elif flag == 'hot':
             query = session.query(model).order_by(
                 desc(model.disagree)).limit(10)
-        return query
+        else:
+            query = session.query(model)
+        try:
+            topics = query.all()
+            return topics
+        except exc.NoResultFound:
+            return None
 
     def add_one(self, topic):
         session = database.get_session()
