@@ -21,6 +21,6 @@ class TokenModel(Base):
     def __json__(self):
         user = api_user.UserAPI()
         return dict(id=self.id,
-                    username=user.get_one_by_id(self.user_id).username,
+                    user=user.get_one_by_id(self.user_id),
                     created_time=self.created_time,
                     updated_time=self.updated_time)
