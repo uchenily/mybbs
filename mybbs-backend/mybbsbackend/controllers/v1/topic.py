@@ -1,5 +1,6 @@
 from pecan import rest
 from pecan import expose
+from pecan import request
 
 from mybbsbackend.database.api import topic as api_topic
 from mybbsbackend.database.model import topic as model_topic
@@ -15,11 +16,11 @@ class TopicController(rest.RestController):
 
     @expose('json')
     def get_all(self):
-        return self.topic.get_all()
-
-    @expose('json')
-    def get_list_by_flag(self, flag):
-        return self.topic.get_list_by_flag(flag)
+        flag = request.GET.get('flag')
+        if flag:
+            return self.topic.get_list_by_flag(flag)
+        else:
+            return self.topic.get_all()
 
     @expose('json')
     def post(self, topic):

@@ -1,5 +1,6 @@
 from pecan import rest
 from pecan import expose
+from pecan import request
 
 from mybbsbackend.database.api import reply as api_reply
 from mybbsbackend.database.model import reply as model_reply
@@ -14,12 +15,12 @@ class ReplyController(rest.RestController):
         return self.reply.get_one_by_id(id)
 
     @expose('json')
-    def get_list_by_topic_id(self, topic_id):
-        return self.reply.get_list_by_topic_id(topic_id)
-
-    @expose('json')
     def get_all(self):
-        return self.reply.get_all()
+        topic_id = request.GET.get('topic_id')
+        if topic_id:
+            return self.reply.get_list_by_topic_id(topic_id)
+        else:
+            return self.reply.get_all()
 
     @expose('json')
     def post(self, reply):
