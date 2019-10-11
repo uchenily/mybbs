@@ -1,6 +1,4 @@
 from sqlalchemy.orm import exc
-from sqlalchemy import desc
-
 from mybbsbackend import database
 from mybbsbackend.database.model import topic as model_topic
 
@@ -29,14 +27,15 @@ class TopicAPI:
         session = database.get_session()
         model = model_topic.TopicModel
         if flag == 'agree':
-            query = session.query(model).order_by(model.agree).limit(10)
+            query = session.query(model).order_by(model.agree.desc()).limit(10)
         elif flag == 'latest':
-            query = session.query(model).order_by(model.updated_time).limit(10)
+            query = session.query(model).order_by(
+                model.updated_time.desc()).limit(10)
         elif flag == 'all':
             query = session.query(model).limit(10)
         elif flag == 'hot':
             query = session.query(model).order_by(
-                desc(model.disagree)).limit(10)
+                model.disagree.desc()).limit(10)
         else:
             query = session.query(model)
         try:
