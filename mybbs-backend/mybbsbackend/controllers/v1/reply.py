@@ -10,8 +10,12 @@ class ReplyController(rest.RestController):
         self.reply = api_reply.ReplyAPI()
 
     @expose('json')
-    def get_one(self, name):
-        return self.reply.get_one_by_name(name)
+    def get_one(self, id):
+        return self.reply.get_one_by_id(id)
+
+    @expose('json')
+    def get_list_by_topic_id(self, topic_id):
+        return self.reply.get_list_by_topic_id(topic_id)
 
     @expose('json')
     def get_all(self):
