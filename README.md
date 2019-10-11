@@ -115,6 +115,42 @@ curl -X PUT http://localhost:8888/v1/users \
 
 
 
+**Token**
+
+创建Token, 传递的参数为用户名和密码
+
+POST /v1/tokens
+
+```bash
+curl -X POST http://localhost:8888/v1/tokens \
+-H "Content-Type: application/json" \
+-d \
+'{
+    "data": {
+        "username": "test1",
+        "password": "password"
+    }
+}'
+```
+
+根据用户名获取Token
+
+GET /v1/tokens?username={username}
+
+```bash
+curl http://localhost:8888/v1/tokens?username=test1
+```
+
+获取Token列表
+
+GET /v1/tokens
+
+```bash
+curl http://localhost:8888/v1/tokens
+```
+
+
+
 **帖子分类**
 
 创建一个分类
@@ -157,8 +193,8 @@ curl -XPOST http://localhost:8888/v1/topics \
     "topic": {
         "title": "test-topic1",
         "author_id": 1,
-        "content": "this is test content1",
-        "category_id": 1
+        "category_id": 1,
+        "content": "this is test content1"
     }
 }'
 ```
@@ -185,11 +221,12 @@ curl -XPOST http://localhost:8888/v1/replies \
 '{
     "reply": {
         "user_id": 1,
-        "content": "this is test content1"
+        "topic_id": 1,
+        "content": "this is test reply1"
     }
 }'
 ```                                           
-                                              
+
 获取回复列表
                                               
 GET /v1/replies
@@ -197,6 +234,14 @@ GET /v1/replies
 ```bash                                
 curl http://localhost:8888/v1/replies
 ```                                           
+
+通过`topic_id`获取对应帖子的回复列表
+
+GET /v1/replies?topic_id={topic_id}
+
+```bash
+curl http://localhost:8888/v1/replies?topic_id=1
+```
 
 
 ### mybbs-frontend项目
