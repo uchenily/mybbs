@@ -17,7 +17,7 @@ class UserModel(Base):
         return dict(
             id=self.id,
             username=self.username,
-            password=self.password,
+            password="****",
             created_time=self.created_time,
             updated_time=self.updated_time
         )

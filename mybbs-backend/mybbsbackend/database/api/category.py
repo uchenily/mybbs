@@ -10,7 +10,7 @@ class CategoryAPI:
         query = session.query(
             model_category.CategoryModel).filter_by(name=name)
         try:
-            category = query.one()
+            category = query.first()
             return category
         except exc.NoResultFound:
             return None

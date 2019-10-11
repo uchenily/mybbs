@@ -10,7 +10,7 @@ class UserAPI:
         query = session.query(
             model_user.UserModel).filter_by(username=username)
         try:
-            user = query.one()
+            user = query.first()
             return user
         except exc.NoResultFound:
             return None

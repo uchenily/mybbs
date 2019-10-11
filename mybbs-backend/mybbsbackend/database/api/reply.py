@@ -15,12 +15,22 @@ class ReplyAPI:
         except exc.NoResultFound:
             return None
 
+    def get_list_by_topic_id(self, topic_id):
+        session = database.get_session()
+        query = session.query(
+                model_reply.ReplyModel).filter_by(topic_id=topic_id)
+        try:
+            replies = query.all()
+            return replies
+        except exc.NoResultFound:
+            return None
+
     def get_all(self):
         session = database.get_session()
         query = session.query(model_reply.ReplyModel)
         try:
-            replys = query.all()
-            return replys
+            replies = query.all()
+            return replies
         except exc.NoResultFound:
             return None
 
