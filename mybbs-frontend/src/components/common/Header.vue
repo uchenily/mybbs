@@ -8,8 +8,8 @@
             <li><router-link to="/topic/new">发布</router-link></li> 
             <li>发现</li> 
         </ul>
-        <div class='user logout' v-if='$store.state.username'>
-            <div>欢迎, {{ this.$store.state.username }}</div>
+        <div class='user logout' v-if='$store.state.token'>
+            <div>欢迎, {{ this.$store.state.token.user.username }}</div>
             <router-link to="/logout"> 注销 </router-link>
         </div>
         <div class='user login' v-else>

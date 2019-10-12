@@ -2,23 +2,21 @@
 <div>
     <common-header></common-header>
     <div class="wrapper">
-        <div class="title clearfix"><span>标题</span><input type="text"/></div>
+        <div class="title clearfix"><span>标题</span><input type="text" v-model="title"/></div>
         <div class="category clearfix">
             <span>分类</span>
-            <select>
-                <option value="volvo">Volvo</option>
-                <option value="saab">Saab</option>
-                <option value="fiat">Fiat</option>
-                <option value="audi">Audi</option>
+            <select  v-model="selected">
+                <option v-for="category in categories.data" :value="category.id">{{ category.name }}</option>
             </select>
         </div>
-        <textarea placeholder="随便写点什么吧~"></textarea>
-        <button>提交</button>
+        <textarea placeholder="随便写点什么吧~" v-model="content"></textarea>
+        <button @click="onSubmit()">提交</button>
     </div>
 </div>
 </template>
 
 <script>
+import axios from 'axios'
 import Header from './common/Header'
 export default {
     name: "TopicNew",
@@ -27,8 +25,47 @@ export default {
     },
     data: function () {
         return {
-            username: "",
+            title: "",
+            selected: 1,
+            categories: [],
+            content: ""
         }
+    },
+    methods: {
+        onSubmit () {
+            if (this.$store.state.token == null) {
+                this.$router.push('/login') 
+                return
+            }
+            let topic = {
+                title: this.title,
+                author_id: this.$store.state.token.user.id,
+                category_id: this.selected,
+                content: this.content
+            }
+            axios({
+                method: "post",
+                url: "/api/v1/topics",
+                header: {
+                    "Content-Type": "application/json"
+                },
+                data: {
+                    topic: topic
+                }
+            }).then(
+                (response) => {
+                    if (response.data != null) {
+                        this.$router.push('/')
+                    }
+                }
+            )
+        }
+    },
+    mounted: function () {
+        axios.get('/api/v1/categories')
+        .then((response) => {
+            this.$set(this.categories, "data", response.data)
+        })
     }
 }
 </script>

@@ -45,9 +45,9 @@ export default {
         }
     },
     mounted: function () {
-        axios.get('/api/categories.json')
-        .then((result) => {
-            this.result = result.data
+        axios.get('/api/v1/categories')
+        .then((response) => {
+            this.$set(this.result, "categories", response.data)
         })
     }
 }

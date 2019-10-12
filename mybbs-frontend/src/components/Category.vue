@@ -25,9 +25,11 @@ export default {
         }
     },
     mounted: function () {
-        axios.get('/api/category.json')
-        .then((result) => {
-            this.result = result.data
+        let id = this.$route.params.id
+        axios.get('/api/v1/categories/' + id)
+        .then((response) => {
+            this.$set(this.result, "name", response.data.name)
+            this.$set(this.result, "description", response.data.description)
         })
     }
 }

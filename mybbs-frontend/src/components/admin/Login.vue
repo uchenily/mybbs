@@ -21,37 +21,28 @@ export default {
   },
   methods: {
     onSubmit () {
-      // let formData = new FormData()
-      // for (let key in this.formInfo) {
-      //   formData.append(key, this.formInfo[key])
-      // }
-      // axios({
-      //   method: "post",
-      //   url: "/api/user.json",
-      //   header: {
-      //     "Content-Type": "multipart/form-data"
-      //   },
-      //   data: formData
-      // }).then(
-      //   (res) => {
-      //     console.log(res)
-      //   }
-      // )
-
-      // axios.get("api/user.json").then(
-      //   (res) => {
-      //     // console.log(res)
-      //     // console.log("token:", res.data.token)
-      //     // let username = res.data.username
-      //     let username = this.formInfo.username
-      //     console.log("username:", username)
-      //     this.$store.dispatch('updateUsername', username)
-      //   }
-      // )
-
-      this.$store.dispatch('updateUsername', this.username)
-      // 跳转到首页
-      this.$router.push('/admin/')
+      axios({
+        method: "post",
+        url: "/api/v1/tokens",
+        header: {
+          "Content-Type": "application/json"
+        },
+        data: {
+          data: {
+            username: this.username,
+            password: this.password
+          }
+        }
+      }).then(
+        (response) => {
+          console.log(response)
+          if (response.data != null) {
+            this.$store.dispatch('updateToken', response.token)
+            this.$store.dispatch('updateUsername', this.username)
+            this.$router.push('/admin/')
+          }
+        }
+      )
     }
   }
 }

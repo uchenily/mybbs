@@ -21,7 +21,7 @@ export default {
         }
     },
     mounted: function () {
-        if (!this.$store.state.username) {
+        if (!this.$store.state.token) {
             this.$router.push('/admin/login')
             return;
         }

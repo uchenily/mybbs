@@ -5,7 +5,7 @@
 export default {
   name: 'Logout',
   mounted: function () {
-    this.$store.dispatch('clearUsername')
+    this.$store.dispatch('clearToken')
     this.$router.push('/admin/login')
   }
 }
