@@ -57,5 +57,10 @@ a:hover {
 .reply {
     display: inline-block;
     float: right;
+    /* 设置最大长度 */
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>
