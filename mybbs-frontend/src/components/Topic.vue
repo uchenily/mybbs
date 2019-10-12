@@ -5,18 +5,18 @@
         <div class='detail'>
             <div class='title'>{{ result.topic.title }}</div>
             <div class='info'>ID: {{ result.topic.id }}</div>
-            <div class='info'>author: {{ result.topic.author }}</div>
-            <div v-html='result.topic.content'>{{ result.topic.content }}</div>
+            <div class='info'>author: {{ result.topic.author.username }}</div>
+            <div v-html='result.topic.content'></div>
         </div>
         <div class="point">
-            <div class="agree"><span>👍</span>{{ result.topic.agree }}</div>
-            <div class="disagree"><span>👎</span>{{ result.topic.disagree }}</div>
+            <div class="agree" @click="doAgree()" :disabled="disabledAgree"><span>👍</span>{{ result.topic.agree }}</div>
+            <div class="disagree" @click="doDisagree()" :disabled="disabledDisagree"><span>👎</span>{{ result.topic.disagree }}</div>
         </div>
         <div class="comment">
             <div class="header">留下一条友善的评论吧~</div>
             <div class="wrapper clearfix">
-                <textarea></textarea>
-                <button v-if="$store.state.username">提交</button>
+                <textarea v-model="content"></textarea>
+                <button v-if="$store.state.token" @click="replySubmit()">提交</button>
                 <button v-else class="disabled">提交</button>
             </div>
         </div>
@@ -29,8 +29,8 @@
                 <div class="wrapper">
                     <li v-for="reply in result.topic.replies">
                         <div class="info clearfix">
-                            <div class="user"><router-link :to="'/users/' + reply.user">{{ reply.user }}</router-link></div>
-                            <div class="date">{{ reply.date }}</div>
+                            <div class="user"><router-link :to="'/users/' + reply.user.username">{{ reply.user.username }}</router-link></div>
+                            <div class="date">{{ reply.updated_time.split('.')[0] }}</div>
                         </div>
                         <div class="content">{{ reply.content }}</div>
                     </li>
@@ -63,17 +63,84 @@ export default {
             result: {
                 // a bug, when data hasn't loaded yet, visit 'result.topic.title' will raise a warning in console.
                 topic: {
+                    author: {},
+                    replies: []
                 }
-            }
+            },
+            content: "",
+            disabledAgree: false,
+            disabledDisagree: false
         }
     },
     components: {
         CommonHeader: Header
     },
+    methods: {
+        replySubmit () {
+            if (this.$store.token) {
+                this.$router.push('/login')
+                return
+            }
+            let reply = {
+                user_id: this.$store.state.token.user.id,
+                topic_id: this.result.topic.id,
+                content: this.content
+            }
+            axios({
+                method: "post",
+                url: "/api/v1/replies",
+                header: {
+                    "Content-Type": "application/json"
+                },
+                data: {
+                    reply: reply
+                }
+            }).then(
+                (response) => {
+                    if (response.data != null) {
+                        // unshift, add in head of array.
+                        this.result.topic.replies.unshift(response.data)
+                        this.content = ""
+                    }
+                }
+            )
+        },
+        doAgree () {
+            if (this.$store.state.token && !this.disabledAgree) {
+                this.result.topic.agree += 1
+                this.disabledAgree = true
+                let topic = {
+                    id: this.result.topic.id,
+                    agree: this.result.topic.agree
+                }
+                axios({
+                    method: "put",
+                    url: "/api/v1/topics",
+                    header: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        topic: topic
+                    }
+                })
+            }
+        },
+        doDisagree () {
+            if (this.$store.state.token && !this.disabledDisagree) {
+                this.result.topic.disagree += 1
+                this.disabledDisagree = true
+            }
+        }
+    },
     mounted: function () {
-        axios.get('/api/topic.json')
-        .then((result) => {
-            this.result = result.data
+        let id = this.$route.params.id
+        axios.get('/api/v1/topics/' + id)
+        .then((response) => {
+            this.$set(this.result, "topic", response.data)
+        })
+        axios.get('/api/v1/replies?topic_id=' + id)
+        .then((response) => {
+            this.$set(this.result.topic, "replies", response.data)
         })
     }
     // 解决跳转同一路由下router-link不跳转问题
@@ -108,6 +175,7 @@ export default {
 .detail .title {
     font-size: 2em;
     font-weight: 400;
+    line-height: 1.2em;
 }
 .detail .info {
     margin: 10px 0;
@@ -183,5 +251,8 @@ export default {
 }
 .recommand .item a:hover {
     text-decoration: underline; 
+}
+.agree:hover, .disagree:hover {
+    cursor: pointer;
 }
 </style>

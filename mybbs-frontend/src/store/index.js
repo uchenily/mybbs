@@ -5,29 +5,29 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        username: "",
+        token: null,
         dashboard: {
             target: String,
             items: Array
         }
     },
     actions: {
-        updateUsername (ctx, username) {
-            ctx.commit('updateUsername', username) // mutations中的updateusername
+        updateToken (ctx, token) {
+            ctx.commit('updateToken', token)
         },
-        clearUsername (ctx) {
-            ctx.commit('clearUsername')
+        clearToken (ctx) {
+            ctx.commit('clearToken')
         },
         updateDashboard(ctx, dashboard) {
             ctx.commit('updateDashboard', dashboard)
         }
     },
     mutations: {
-        updateUsername (state, username) {
-            state.username = username
+        updateToken (state, token) {
+            state.token = token
         },
-        clearUsername (state, username) {
-            state.username = ""
+        clearToken (state, token) {
+            state.token = null
         },
         updateDashboard(state, dashboard) {
             state.dashboard = dashboard

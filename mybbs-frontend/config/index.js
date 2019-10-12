@@ -10,14 +10,24 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    // 将 /api 代理到 /static/mock 路径下
+    // proxyTable: {},
+    // // 将 /api 代理到 /static/mock 路径下
+    // proxyTable: {
+    //     '/api': {
+    //         target: 'http://localhost:8080',
+    //         pathRewrite: {
+    //             '^/api': '/static/mock'
+    //         }
+    //     }
+    // },
     proxyTable: {
-        '/api': {
-            target: 'http://localhost:8080',
-            pathRewrite: {
-                '^/api': '/static/mock'
-            }
+      '/api': {
+        target: 'http://localhost:8888',
+        changeOrigin: true, // 是否跨域
+        pathRewrite: {
+          '^/api': ''
         }
+      }
     },
 
     // Various Dev Server settings
