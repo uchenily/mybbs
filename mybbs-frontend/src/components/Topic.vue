@@ -3,14 +3,14 @@
     <common-header></common-header>
     <div class="left-column">
         <div class='detail'>
-            <div class='title'>{{ result.topic.title }}</div>
-            <div class='info'>ID: {{ result.topic.id }}</div>
-            <div class='info'>author: {{ result.topic.author.username }}</div>
-            <div v-html='result.topic.content'></div>
+            <div class='title'>{{ topic.title }}</div>
+            <div class='info'>ID: {{ topic.id }}</div>
+            <div class='info' v-if="topic.author">author: {{ topic.author.username }}</div>
+            <div v-html='topic.content'></div>
         </div>
         <div class="point">
-            <div class="agree" @click="doAgree()" :disabled="disabledAgree"><span>👍</span>{{ result.topic.agree }}</div>
-            <div class="disagree" @click="doDisagree()" :disabled="disabledDisagree"><span>👎</span>{{ result.topic.disagree }}</div>
+            <div class="agree" @click="doAgree()" :disabled="disabledAgree"><span>👍</span>{{ topic.agree }}</div>
+            <div class="disagree" @click="doDisagree()" :disabled="disabledDisagree"><span>👎</span>{{ topic.disagree }}</div>
         </div>
         <div class="comment">
             <div class="header">留下一条友善的评论吧~</div>
@@ -22,12 +22,12 @@
         </div>
         <div class="reply">
             <div class="header">
-                <div v-if="result.topic.replies">最新评论:</div>
+                <div v-if="topic.replies">最新评论:</div>
                 <div v-else>还没有评论哦~</div>
             </div>
             <ul>
                 <div class="wrapper">
-                    <li v-for="reply in result.topic.replies">
+                    <li v-for="reply in topic.replies">
                         <div class="info clearfix">
                             <div class="user"><router-link :to="'/users/' + reply.user.username">{{ reply.user.username }}</router-link></div>
                             <div class="date">{{ reply.updated_time.split('.')[0] }}</div>
@@ -45,7 +45,7 @@
         <div class="recommand">
             <div class="header">推荐帖子</div>
             <ul>
-                <li class="item" v-for="item in result.recommand"><router-link :to="'/topics/' + item.id">{{ item.title }}</router-link></li>
+                <li class="item" v-for="item in topic.recommand"><router-link :to="'/topics/' + item.id">{{ item.title }}</router-link></li>
             </ul>
         </div> 
         <div></div> 
@@ -60,13 +60,7 @@ export default {
     name: "Topic",
     data: function () {
         return {
-            result: {
-                // a bug, when data hasn't loaded yet, visit 'result.topic.title' will raise a warning in console.
-                topic: {
-                    author: {},
-                    replies: []
-                }
-            },
+            topic: {},
             content: "",
             disabledAgree: false,
             disabledDisagree: false
@@ -83,7 +77,7 @@ export default {
             }
             let reply = {
                 user_id: this.$store.state.token.user.id,
-                topic_id: this.result.topic.id,
+                topic_id: this.topic.id,
                 content: this.content
             }
             axios({
@@ -97,9 +91,9 @@ export default {
                 }
             }).then(
                 (response) => {
-                    if (response.data != null) {
+                    if (response.data) {
                         // unshift, add in head of array.
-                        this.result.topic.replies.unshift(response.data)
+                        this.topic.replies.unshift(response.data)
                         this.content = ""
                     }
                 }
@@ -107,11 +101,11 @@ export default {
         },
         doAgree () {
             if (this.$store.state.token && !this.disabledAgree) {
-                this.result.topic.agree += 1
+                this.topic.agree += 1
                 this.disabledAgree = true
                 let topic = {
-                    id: this.result.topic.id,
-                    agree: this.result.topic.agree
+                    id: this.topic.id,
+                    agree: this.topic.agree
                 }
                 axios({
                     method: "put",
@@ -127,7 +121,7 @@ export default {
         },
         doDisagree () {
             if (this.$store.state.token && !this.disabledDisagree) {
-                this.result.topic.disagree += 1
+                this.topic.disagree += 1
                 this.disabledDisagree = true
             }
         }
@@ -136,11 +130,15 @@ export default {
         let id = this.$route.params.id
         axios.get('/api/v1/topics/' + id)
         .then((response) => {
-            this.$set(this.result, "topic", response.data)
+            if (response.data) {
+                this.topic = response.data
+            }
         })
         axios.get('/api/v1/replies?topic_id=' + id)
         .then((response) => {
-            this.$set(this.result.topic, "replies", response.data)
+            if (response.data) {
+                this.$set(this.topic, "replies", response.data)
+            }
         })
     }
     // 解决跳转同一路由下router-link不跳转问题
