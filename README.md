@@ -207,6 +207,22 @@ GET /v1/topics
 curl http://localhost:8888/v1/topics
 ```
 
+根据flag获取帖子列表
+
+GET /v1/topics?flag={flag}
+
+```bash
+curl http://localhost:8888/v1/topics?flag=latest
+```
+
+根据category_id获取帖子列表
+
+GET /v1/topics?category_id={category_id}
+
+```bash
+curl http://localhost:8888/v1/topics?category_id=1
+```
+
 
 **回复**         
                                               
