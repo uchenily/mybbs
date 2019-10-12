@@ -132,6 +132,10 @@ export default {
         .then((response) => {
             if (response.data) {
                 this.topic = response.data
+                // this.topic.replies is null when replySubmit()
+                // it's only appear on online version(it works well in local)
+                // I don't know why...
+                this.$set(this.topic, "replies", [])
             }
         })
         axios.get('/api/v1/replies?topic_id=' + id)
