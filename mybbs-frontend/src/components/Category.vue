@@ -31,6 +31,10 @@ export default {
             this.$set(this.result, "name", response.data.name)
             this.$set(this.result, "description", response.data.description)
         })
+        axios.get('/api/v1/topics?category_id=' + id)
+        .then((response) => {
+            this.$set(this.result, "items", response.data)
+        })
     }
 }
 </script>

@@ -6,7 +6,7 @@
                 <router-link class="title" :to="'/topics/' + item.id">{{ item.title }}</router-link>
                 <div class='info'>
                     • <router-link class="" :to="'/users/' + item.author.username">{{ item.author.username }}</router-link>
-                    • <router-link class="" :to="'/categories/' + item.category.name">{{ item.category.name }}</router-link>
+                    • <router-link class="" :to="'/categories/' + item.category.id">{{ item.category.name }}</router-link>
                     <div class="reply" v-if="item.latestReply"> • {{ item.latestReply }}</div>
                 </div>
             </div>
