@@ -44,6 +44,16 @@ class TopicAPI:
         except exc.NoResultFound:
             return None
 
+    def get_list_by_category_id(self, category_id):
+        session = database.get_session()
+        query = session.query(model_topic.TopicModel).filter_by(
+            category_id=category_id)
+        try:
+            topics = query.all()
+            return topics
+        except exc.NoResultFound:
+            return None
+
     def add_one(self, topic):
         session = database.get_session()
         try:
