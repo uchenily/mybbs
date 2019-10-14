@@ -17,20 +17,22 @@ export default {
     },
     data: function () {
         return {
-            result: {}
+            categories: [],
+            target: "categories"
         }
     },
     mounted: function () {
         if (!this.$store.state.token) {
             this.$router.push('/admin/login')
-            return;
+            return
         }
-        axios.get('/api/admin_category.json')
-        .then((result) => {
-            this.result = result.data
+        axios.get('/api/v1/categories')
+        .then((response) => {
+            this.categories = response.data
             let dashboard = {
-                target: this.result.target,
-                items: this.result.items
+                target: this.target,
+                items: this.categories,
+                actions: ['update', 'delete']
             }
             this.$store.dispatch('updateDashboard', dashboard)
         })

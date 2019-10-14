@@ -21,12 +21,17 @@ export default {
     return {
       username: "",
       password: "",
-      alertWarning: "用户名已存在!",
+      alertWarning: "",
       hasWarning: false
     }
   },
   methods: {
     register () {
+      if (this.username == "") {
+        this.alertWarning = "用户名不能为空!"
+        this.hasWarning = true
+        return
+      }
       axios({
         method: "post",
         url: "/api/v1/users",
@@ -44,6 +49,7 @@ export default {
           if (response.data) {
             this.$router.push('/')
           } else {
+            this.alertWarning = "用户名已存在!"
             this.hasWarning = true
             // setTimeout(() => {
             //   this.hasWarning = false

@@ -1,19 +1,19 @@
 <template>
 <div class="content">
-    <table>
+    <table v-if="items.length != 0">
         <tr>
             <th v-for="(value, key) in items[0]">{{ key }}</th>
+            <th v-for="action in actions">{{ action }}</th>
         </tr>
-        <tr v-for="item in items">
+        <tr v-for="(item, index) in items">
             <td v-for="(value, key) in item">
-                <div v-if="value instanceof Array">
-                    <ul class="actions">
-                        <li v-for="action in value" :class="action">
-                            <router-link :to="'/admin/' + target + '/' + action">{{ action }}</router-link>
-                        </li>
-                    </ul>
-                </div>
-                <div v-else>{{ value }}</div>
+                <div v-if="!(value instanceof Object)">{{ value }}</div>
+                <div v-else>{{ value.id }}</div>
+            </td>
+            <td v-for="action in actions">
+                <ul class="action">
+                    <button @click="doAction(action, '/api/v1/' + target + '/' + item.id, index)" :class="action">{{ action }}</button>
+                </ul>
             </td>
         </tr>
     </table> 
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     name: 'AdminContent',
     computed: {
@@ -29,6 +30,22 @@ export default {
         },
         items: function () {
             return this.$store.state.dashboard.items
+        },
+        actions: function () {
+            return this.$store.state.dashboard.actions
+        }
+    },
+    methods: {
+        doAction (action, url, index) {
+            if (action == 'update') {
+                // TODO
+                return
+            } else if (action == 'delete') {
+                axios.delete(url)
+                .then(() => {
+                    this.items.splice(index, 1)
+                })
+            }
         }
     }
 }
@@ -57,8 +74,9 @@ table tr{
     -moz-transition: all 0.1s ease-in-out;
     -ms-transition: all 0.1s ease-in-out;
     transition: all 0.1s ease-in-out;
-    text-align: center;
+    text-align: left;
     line-height: 30px;
+    overflow: hidden;
 }
 table tr th {
     color: #f3f3f3;
@@ -68,19 +86,14 @@ table tr th {
 table tr:nth-child(odd) {
     background: #fff;
 }
-ul.actions {
-    
-}
-ul.actions li {
+.action button {
     display: inline-block;
+    height: 30px;
     padding: 0 20px;
+    border: 1px solid #fff;
 }
 .delete, .update {
     border-radius: 4px;
-    margin: 2px 10px;
-}
-.delete a, .update a {
-    display: inline-block;
     color: #fff;
 }
 .delete {
@@ -88,5 +101,16 @@ ul.actions li {
 }
 .update {
     background: #42af42;
+}
+table {
+    table-layout:fixed;  
+}
+table tr td div {
+    text-align: left;
+    font-weight: 30px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 </style>

@@ -30,7 +30,7 @@
                     <li v-for="reply in topic.replies">
                         <div class="info clearfix">
                             <div class="user"><router-link :to="'/users/' + reply.user.username">{{ reply.user.username }}</router-link></div>
-                            <div class="date">{{ reply.updated_time.split('.')[0] }}</div>
+                            <div class="date">{{ reply.updated_time }}</div>
                         </div>
                         <div class="content">{{ reply.content }}</div>
                     </li>

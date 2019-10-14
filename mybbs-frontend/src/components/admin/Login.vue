@@ -35,10 +35,8 @@ export default {
         }
       }).then(
         (response) => {
-          console.log(response)
-          if (response.data != null) {
-            this.$store.dispatch('updateToken', response.token)
-            this.$store.dispatch('updateUsername', this.username)
+          if (response.data) {
+            this.$store.dispatch('updateToken', response.data)
             this.$router.push('/admin/')
           }
         }

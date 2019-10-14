@@ -2,13 +2,13 @@
     <div class='header'>
         <div class='logo'><router-link to='/'>MYBBS</router-link></div>
         <ul class='menu'>
-            <li><a @click="management('category')">分类管理</a></li> 
-            <li><a @click="management('user')">用户管理</a></li> 
-            <li><a @click="management('topic')">帖子管理</a></li> 
-            <li><a @click="management('reply')">评论管理</a></li> 
+            <li><a @click="management('categories')">分类管理</a></li> 
+            <li><a @click="management('users')">用户管理</a></li> 
+            <li><a @click="management('topics')">帖子管理</a></li> 
+            <li><a @click="management('replies')">评论管理</a></li> 
         </ul>
-        <div class='user logout'>
-            <div>欢迎, {{ this.$store.state.username }}</div>
+        <div class='user logout' v-if="this.$store.state.token">
+            <div>欢迎, {{ this.$store.state.token.user.username }}</div>
             <router-link to="/admin/logout"> 注销 </router-link>
         </div>
     </div>
@@ -19,15 +19,17 @@ import axios from 'axios'
 export default {
     name: "AdminHeader",
     methods: {
-        management (type) {
-            axios.get('/api/admin_' + type + '.json')
-            .then((result) => {
-                this.result = result.data
-                let dashboard = {
-                    target: this.result.target,
-                    items: this.result.items
+        management (target) {
+            axios.get('/api/v1/' + target)
+            .then((response) => {
+                if (response.data) {
+                    let dashboard = {
+                        target: target,
+                        items: response.data,
+                        actions: ['update', 'delete']
+                    }
+                    this.$store.dispatch('updateDashboard', dashboard)
                 }
-                this.$store.dispatch('updateDashboard', dashboard)
             })
         }
     }
