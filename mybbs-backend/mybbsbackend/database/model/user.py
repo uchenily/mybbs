@@ -18,6 +18,6 @@ class UserModel(Base):
             id=self.id,
             username=self.username,
             password="****",
-            created_time=self.created_time,
-            updated_time=self.updated_time
+            created_time=self.created_time.strftime("%Y-%m-%d %H:%M:%S"),
+            updated_time=self.updated_time.strftime("%Y-%m-%d %H:%M:%S")
         )

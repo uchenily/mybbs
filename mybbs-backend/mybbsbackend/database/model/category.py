@@ -19,6 +19,6 @@ class CategoryModel(Base):
             id=self.id,
             name=self.name,
             description=self.description,
-            created_time=self.created_time,
-            updated_time=self.updated_time
+            created_time=self.created_time.strftime("%Y-%m-%d %H:%M:%S"),
+            updated_time=self.updated_time.strftime("%Y-%m-%d %H:%M:%S")
         )

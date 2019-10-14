@@ -20,7 +20,9 @@ class TokenModel(Base):
 
     def __json__(self):
         user = api_user.UserAPI()
-        return dict(id=self.id,
-                    user=user.get_one_by_id(self.user_id),
-                    created_time=self.created_time,
-                    updated_time=self.updated_time)
+        return dict(
+            id=self.id,
+            user=user.get_one_by_id(self.user_id),
+            created_time=self.created_time.strftime("%Y-%m-%d %H:%M:%S"),
+            updated_time=self.updated_time.strftime("%Y-%m-%d %H:%M:%S")
+        )
