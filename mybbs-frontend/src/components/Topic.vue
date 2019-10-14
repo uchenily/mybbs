@@ -123,6 +123,20 @@ export default {
             if (this.$store.state.token && !this.disabledDisagree) {
                 this.topic.disagree += 1
                 this.disabledDisagree = true
+                let topic = {
+                    id: this.topic.id,
+                    disagree: this.topic.disagree
+                }
+                axios({
+                    method: "put",
+                    url: "/api/v1/topics",
+                    header: {
+                        "Content-Type": "application/json"
+                    },
+                    data: {
+                        topic: topic
+                    }
+                })
             }
         }
     },
