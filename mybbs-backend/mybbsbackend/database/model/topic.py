@@ -31,6 +31,6 @@ class TopicModel(Base):
             category=category.get_one_by_id(self.category_id),
             agree=self.agree,
             disagree=self.disagree,
-            created_time=self.created_time,
-            updated_time=self.updated_time
+            created_time=self.created_time.strftime("%Y-%m-%d %H:%M:%S"),
+            updated_time=self.updated_time.strftime("%Y-%m-%d %H:%M:%S")
         )

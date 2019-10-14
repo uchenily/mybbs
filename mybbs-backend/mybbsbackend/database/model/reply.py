@@ -24,6 +24,6 @@ class ReplyModel(Base):
             user=user.get_one_by_id(self.user_id),
             topic=topic.get_one_by_id(self.topic_id),
             content=self.content,
-            created_time=self.created_time,
-            updated_time=self.updated_time
+            created_time=self.created_time.strftime("%Y-%m-%d %H:%M:%S"),
+            updated_time=self.updated_time.strftime("%Y-%m-%d %H:%M:%S")
         )
