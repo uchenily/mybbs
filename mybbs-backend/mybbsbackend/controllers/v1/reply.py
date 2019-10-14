@@ -32,6 +32,6 @@ class ReplyController(rest.RestController):
         return self.reply.update_reply(reply)
 
     @expose('json')
-    def delete(self, reply):
-        self.reply.delete_reply_by_id(reply)
+    def delete(self, id):
+        self.reply.delete_reply_by_id(id)
         return None

@@ -61,10 +61,9 @@ class ReplyAPI:
             pass
             # TODO
 
-    def delete_reply_by_id(self, reply):
+    def delete_reply_by_id(self, id):
         session = database.get_session()
-        reply_id = reply.get('id')
-        query = session.query(model_reply.ReplyModel).filter_by(id=reply_id)
+        query = session.query(model_reply.ReplyModel).filter_by(id=id)
         try:
             reply = query.one()
             session.delete(reply)

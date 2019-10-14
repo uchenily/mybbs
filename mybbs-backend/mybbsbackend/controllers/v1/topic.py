@@ -35,6 +35,6 @@ class TopicController(rest.RestController):
         return self.topic.update_topic(topic)
 
     @expose('json')
-    def delete(self, topic):
-        self.topic.delete_topic_by_id(topic)
+    def delete(self, id):
+        self.topic.delete_topic_by_id(id)
         return None

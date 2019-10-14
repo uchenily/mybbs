@@ -27,6 +27,6 @@ class CategoryController(rest.RestController):
         return self.category.update_category(category)
 
     @expose('json')
-    def delete(self, category):
-        self.category.delete_category_by_id(category)
+    def delete(self, id):
+        self.category.delete_category_by_id(id)
         return None

@@ -27,6 +27,6 @@ class UserController(rest.RestController):
         return self.user.update_user(user)
 
     @expose('json')
-    def delete(self, username):
-        self.user.delete_user_by_username(username)
+    def delete(self, id):
+        self.user.delete_user_by_id(id)
         return None

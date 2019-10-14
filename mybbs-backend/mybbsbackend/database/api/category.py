@@ -17,8 +17,7 @@ class CategoryAPI:
 
     def get_one_by_id(self, id):
         session = database.get_session()
-        query = session.query(
-            model_category.CategoryModel).filter_by(id=id)
+        query = session.query(model_category.CategoryModel).filter_by(id=id)
         try:
             category = query.one()
             return category
@@ -48,8 +47,8 @@ class CategoryAPI:
     def update_category(self, category):
         session = database.get_session()
         category_id = category.get('id')
-        query = session.query(model_category.CategoryModel).filter_by(
-            id=category_id)
+        query = session.query(
+            model_category.CategoryModel).filter_by(id=category_id)
         try:
             query.update(category)
             session.flush()
@@ -59,11 +58,9 @@ class CategoryAPI:
             pass
             # TODO
 
-    def delete_category_by_id(self, category):
+    def delete_category_by_id(self, id):
         session = database.get_session()
-        category_id = category.get('id')
-        query = session.query(
-            model_category.CategoryModel).filter_by(id=category_id)
+        query = session.query(model_category.CategoryModel).filter_by(id=id)
         try:
             category = query.one()
             session.delete(category)

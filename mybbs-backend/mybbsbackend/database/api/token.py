@@ -61,10 +61,10 @@ class TokenAPI:
             pass
             # TODO
 
-    def delete_token_by_tokenname(self, tokenname):
+    def delete_token_by_user_id(self, user_id):
         session = database.get_session()
         query = session.query(
-            model_token.TokenModel).filter_by(tokenname=tokenname)
+            model_token.TokenModel).filter_by(user_id=user_id)
         try:
             token = query.first()
             session.delete(token)

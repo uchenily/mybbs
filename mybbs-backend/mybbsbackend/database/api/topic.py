@@ -79,11 +79,10 @@ class TopicAPI:
             pass
             # TODO
 
-    def delete_topic_by_id(self, topic):
+    def delete_topic_by_id(self, id):
         session = database.get_session()
-        topic_id = topic.get('id')
         query = session.query(
-            model_topic.TopicModel).filter_by(id=topic_id)
+            model_topic.TopicModel).filter_by(id=id)
         try:
             topic = query.one()
             session.delete(topic)

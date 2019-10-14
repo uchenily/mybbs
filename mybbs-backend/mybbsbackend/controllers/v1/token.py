@@ -33,6 +33,6 @@ class TokenController(rest.RestController):
         return self.token.update_token(token)
 
     @expose('json')
-    def delete(self, token):
-        self.token.delete_token_by_id(token)
+    def delete(self, user_id):
+        self.token.delete_token_by_user_id(user_id)
         return None

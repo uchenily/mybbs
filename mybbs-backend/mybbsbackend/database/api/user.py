@@ -60,10 +60,10 @@ class UserAPI:
             pass
             # TODO
 
-    def delete_user_by_username(self, username):
+    def delete_user_by_id(self, id):
         session = database.get_session()
         query = session.query(
-            model_user.UserModel).filter_by(username=username)
+            model_user.UserModel).filter_by(id=id)
         try:
             user = query.first()
             session.delete(user)
